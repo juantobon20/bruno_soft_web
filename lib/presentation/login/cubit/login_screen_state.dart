@@ -47,11 +47,17 @@ class LoginErrorState {
     this.password
   });
 
-  LoginErrorState copyWith({
-    String? userName,
-    String? password
+  LoginErrorState copyWithUser({
+    String? userName
   }) => LoginErrorState(
     userName: userName,
     password: password
+  );
+
+  LoginErrorState copyWithPassword({
+    String? password
+  }) => LoginErrorState(
+    password: password,
+    userName: userName
   );
 }

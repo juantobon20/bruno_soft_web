@@ -1,4 +1,5 @@
 
+import 'package:bruno_soft_web/domain/usecases/login_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,10 +11,13 @@ part 'login_screen_state.dart';
 class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
 
   final ValidationRouter _validationRouter;
+  final LoginUseCase _loginUseCase;
 
   LoginScreenBloc({
-    required ValidationRouter validationRouter
+    required ValidationRouter validationRouter,
+    required LoginUseCase loginUseCase
   }) : _validationRouter = validationRouter, 
+    _loginUseCase = loginUseCase,
     super(const LoginState()) {
       on<UserNameChangedEvent>(_onUserNameChanged);
       on<PasswordChangedEvent>(_onPasswordChanged);
@@ -26,13 +30,13 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
     ]);
 
     final validation = _validationRouter.validate(ValidationType.other, event.userName);
-    final newLoginErrorState = state.loginErrorState.copyWith(
-      userName: validation.messageError
-    );
-
+  
     emit(state.copyWith(
-      userName: !validation.isValid ? event.userName : null,
-      loginErrorState: newLoginErrorState
+      userName: event.userName,
+      loginErrorState: state.loginErrorState.copyWithUser(
+        userName: validation.messageError
+      ),
+      isValid: state.isValid && validation.isValid
     ));
   }
 
@@ -45,10 +49,11 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
     final validation = _validationRouter.validate(ValidationType.password, event.password);
 
     emit(state.copyWith(
-      password: !validation.isValid ? event.password : null,
-      loginErrorState : state.loginErrorState.copyWith(
+      password: event.password,
+      loginErrorState : state.loginErrorState.copyWithPassword(
         password: validation.messageError
-      )
+      ),
+      isValid: state.isValid && validation.isValid
     ));
   }
 
@@ -60,7 +65,9 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
     add(PasswordChangedEvent(password: value));
   }
 
-  void onErrors() {
-    add(PasswordChangedEvent(password: "asds"));
+  void onSubmit() {
+    if (!state.isValid) {
+
+    }
   }
 }

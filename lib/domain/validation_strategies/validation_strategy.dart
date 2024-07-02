@@ -5,7 +5,7 @@ abstract class ValidationStrategy {
 class PasswordValidationStrategy implements ValidationStrategy {
   @override
   String? validate(String value) {
-    RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$');
+    RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{6,}$');
     if (!passwordRegex.hasMatch(value)) {
       return 'La contraseña debe tener al menos 6 caracteres\nUna mayúscula\nUna minúscula\nUn número\nUn carácter especial.';
     }

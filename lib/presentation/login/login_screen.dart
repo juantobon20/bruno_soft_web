@@ -97,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                   width: 170,
                   padding: const EdgeInsets.only(top: 20),
                   isLoading: false,
-                  onPressedCallback: context.read<LoginScreenBloc>().onErrors
+                  onPressedCallback: context.read<LoginScreenBloc>().onSubmit
                 )
               ],
             ),
