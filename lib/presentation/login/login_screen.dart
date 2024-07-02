@@ -1,3 +1,4 @@
+import 'package:bruno_soft_web/presentation/dialogs/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,10 +13,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(
+    return BlocConsumer<LoginScreenBloc, LoginState>(
       listener: (context, state) {
         if (state.errorData != null) {
-          
+          ErrorDialogProvider(
+            context: context, 
+            errorData: state.errorData!
+          );
         }
       },
       builder: (context, state) {
@@ -31,7 +35,12 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _logo,
-                      _container(context, userController, passwordController)
+                      _container(
+                        context,
+                        state,
+                        userController, 
+                        passwordController
+                      )
                     ],
                   )
                 ),
@@ -49,8 +58,12 @@ class LoginScreen extends StatelessWidget {
     height: 240,
   );
 
-  Widget _container(BuildContext context, TextEditingController userController,
-      TextEditingController password) {
+  Widget _container(
+    BuildContext context,
+    LoginState state,
+    TextEditingController userController,
+    TextEditingController password
+  ) {
     final size = MediaQuery.of(context).size;
 
     return Container(
@@ -64,26 +77,28 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomTextField(
-                    labelText: 'Usuario',
-                    icon: const Icon(Icons.person),
-                    controller: userController,
-                    errorText: null,
-                    onChanged: (_) {}),
+                  labelText: 'Usuario',
+                  icon: const Icon(Icons.person),
+                  controller: userController,
+                  errorText: state.loginErrorState.userName,
+                  onChanged: context.read<LoginScreenBloc>().onUserNameChanged,
+                ),
                 CustomPasswordTextField(
-                    labelText: 'Contraseña',
-                    icon: const Icon(Icons.lock),
-                    padding:
-                        const EdgeInsets.only(top: 20, left: 10, right: 10),
-                    controller: passwordController,
-                    errorText: null,
-                    onChanged: (_) {}),
+                  labelText: 'Contraseña',
+                  icon: const Icon(Icons.lock),
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  controller: passwordController,
+                  errorText: state.loginErrorState.password,
+                  onChanged: context.read<LoginScreenBloc>().onPasswordChanged,
+                ),
                 PrimaryButton(
-                    text: 'Iniciar Sesión',
-                    radius: 10,
-                    width: 170,
-                    padding: const EdgeInsets.only(top: 20),
-                    isLoading: false,
-                    onPressedCallback: () async {})
+                  text: 'Iniciar Sesión',
+                  radius: 10,
+                  width: 170,
+                  padding: const EdgeInsets.only(top: 20),
+                  isLoading: false,
+                  onPressedCallback: context.read<LoginScreenBloc>().onErrors
+                )
               ],
             ),
           ),

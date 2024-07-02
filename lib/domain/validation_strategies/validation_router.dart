@@ -1,3 +1,5 @@
+import 'package:bruno_soft_web/domain/models/validation_response.dart';
+
 import 'validation_strategy.dart';
 
 class ValidationRouter {
@@ -7,19 +9,19 @@ class ValidationRouter {
     _routes[type] = strategies;
   }
 
-  String? validate(ValidationType type, String value) {
+  ValidationResponse validate(ValidationType type, String value) {
     final List<ValidationStrategy>? strategiesByType = _routes[type];
     if (strategiesByType == null || strategiesByType.isEmpty) {
-      return 'Tipo de validación no encontrado';
+      return ValidationResponse(isValid: false, messageError: 'Tipo de validación no encontrado');
     }
 
     for (var strategy in strategiesByType) {
-      final validate = strategy.validate(value);
-      if (validate != null) {
-        return validate;
+      final messageError = strategy.validate(value);
+      if (messageError != null) {
+        return ValidationResponse(isValid: false, messageError: messageError);
       }
     }
-    return null;
+    return ValidationResponse(isValid: true);
   }
 }
 

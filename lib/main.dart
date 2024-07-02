@@ -21,7 +21,7 @@ class MainApp extends StatelessWidget {
       theme: AppTheme().getTheme(),
       home: Scaffold(
         body: BlocProvider(
-        create: (context) => getIt<LoginBloc>(),
+        create: (context) => getIt<LoginScreenBloc>(),
         child: LoginScreen(),
       )),
     );

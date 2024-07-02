@@ -4,36 +4,54 @@ class LoginState extends Equatable {
 
   final bool isLoading;
   final String userName;
-  final String? userNameError;
   final String password;
-  final String? passwordError;
+  final bool isValid;
+  final LoginErrorState loginErrorState;
   final ErrorData? errorData;
 
   const LoginState({
     this.isLoading = false,
     this.userName = "",
-    this.userNameError,
     this.password = "",
-    this.passwordError,
-    this.errorData
+    this.isValid = false,
+    this.errorData,
+    this.loginErrorState = const LoginErrorState()
   });
 
   LoginState copyWith({
     bool? isLoading,
     String? userName,
-    String? userNameError,
     String? password,
-    String? passwordError,
-    ErrorData? errorData
+    bool? isValid,
+    ErrorData? errorData,
+    LoginErrorState? loginErrorState
   }) => LoginState(
     isLoading: isLoading ?? this.isLoading,
     userName: userName ?? this.userName,
-    userNameError: userNameError ?? this.userNameError,
     password: password ?? this.password,
-    passwordError: passwordError ?? this.passwordError,
-    errorData: errorData ?? this.errorData
+    isValid: isValid ?? this.isValid,
+    errorData: errorData ?? this.errorData,
+    loginErrorState: loginErrorState ?? this.loginErrorState,
   );
 
   @override
-  List<Object> get props => [ isLoading, userName, password ];
+  List<Object> get props => [ isLoading, userName, password, isValid, loginErrorState ];
+}
+
+class LoginErrorState {
+  final String? userName;
+  final String? password;
+
+  const LoginErrorState({
+    this.userName,
+    this.password
+  });
+
+  LoginErrorState copyWith({
+    String? userName,
+    String? password
+  }) => LoginErrorState(
+    userName: userName,
+    password: password
+  );
 }

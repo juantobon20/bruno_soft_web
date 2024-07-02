@@ -6,8 +6,8 @@ class ErrorData {
 
   ErrorData({
     required this.type, 
-    required this.title, 
-    required this.message
+    this.title = "", 
+    this.message = ""
   });
 }
 

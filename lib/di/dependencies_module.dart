@@ -23,5 +23,5 @@ void setupLocator() {
   getIt.registerLazySingleton(() => ValidationRouter());
 
   //Blocs
-  getIt.registerLazySingleton(() => LoginBloc(validationRouter: getIt<ValidationRouter>()));
+  getIt.registerLazySingleton(() => LoginScreenBloc(validationRouter: getIt<ValidationRouter>()));
 }
