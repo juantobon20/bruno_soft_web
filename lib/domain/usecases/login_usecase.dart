@@ -1,0 +1,19 @@
+import '../../data/data.dart';
+import '../domain.dart';
+
+class LoginUseCase {
+
+  final AuthRepository _authRepository;
+
+  LoginUseCase({required AuthRepository authRepository}) : _authRepository = authRepository;
+
+  Future login({
+    required String userName,
+    required String password
+  }) async {
+    final AuthRequest request = AuthRequest(userName: userName, password: password);
+
+    final response = await _authRepository.login(authRequest: request);
+    print(response);
+  }
+}
