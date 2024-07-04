@@ -13,5 +13,5 @@ class ErrorData {
 
 enum ErrorType {
   noInternet,
-  api
+  otherError
 }

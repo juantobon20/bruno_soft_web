@@ -36,7 +36,7 @@ class EmptyValidationStrategy implements ValidationStrategy {
 
 class MinimumValidationStrategy implements ValidationStrategy {
 
-  int minimumLength = 6;
+  int minimumLength = 4;
 
   void setMinimum(int minimumLength) {
     this.minimumLength = minimumLength;

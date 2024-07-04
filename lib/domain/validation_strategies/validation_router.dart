@@ -1,6 +1,4 @@
-import 'package:bruno_soft_web/domain/models/validation_response.dart';
-
-import 'validation_strategy.dart';
+import '../domain.dart';
 
 class ValidationRouter {
   final Map<ValidationType, List<ValidationStrategy>> _routes = {};

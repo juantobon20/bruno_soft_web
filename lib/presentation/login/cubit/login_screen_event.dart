@@ -15,9 +15,13 @@ class PasswordChangedEvent extends LoginEvent {
 }
 
 class LoadingEvent extends LoginEvent {
-  final bool isLoading;
+  final LoadingEnum loading;
 
-  LoadingEvent({required this.isLoading});
+  LoadingEvent({required this.loading});
 }
 
-class SubmitEvent extends LoginEvent {}
+class ErrorEvent extends LoginEvent {
+  final ErrorData errorData;
+
+  ErrorEvent({required this.errorData});
+}

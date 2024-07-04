@@ -12,7 +12,6 @@ void showLoadingDialog(
       builder: (context) => AlertDialog(
         content: _LoadingDialog(message: message),
       )
-      //_LoadingDialog(message: message)
     );
   });
 }
@@ -27,7 +26,8 @@ class _LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 150,
+      width: 150,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,8 +35,8 @@ class _LoadingDialog extends StatelessWidget {
           children: [
             Lottie.asset(
               'assets/lottie/loading.json',
-              width: 150,
-              height: 150
+              width: 100,
+              height: 100
             ),
       
             if (message != null)

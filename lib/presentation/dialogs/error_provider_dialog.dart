@@ -18,7 +18,7 @@ class ErrorDialogProvider {
     switch (errorData.type) {
       case ErrorType.noInternet: 
         _showNoConnectionSheetDialog(context, onRetryPressed);
-      case ErrorType.api:
+      case ErrorType.otherError:
         _showAlertDialog(
           context, 
           errorData.title, 

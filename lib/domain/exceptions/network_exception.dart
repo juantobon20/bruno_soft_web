@@ -1,8 +1,8 @@
 class NetworkException implements Exception {}
 
 class ApiFailureException implements Exception {
-  final int statusCode;
-  final String message;
+  final int? statusCode;
+  final String? message;
 
   ApiFailureException(this.statusCode, this.message);
 }

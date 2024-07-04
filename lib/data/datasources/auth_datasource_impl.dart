@@ -10,8 +10,13 @@ class AuthDatasourceImpl extends AuthDatasource {
   @override
   Future<AuthResponse> login({required AuthRequest authRequest}) async {
     final dataRequest = authRequest.toJson();
-    final loginResponse = await _dioProvider.post("login", dataRequest);
+    final loginResponse = await _dioProvider.post("Auth/Login", dataRequest);
 
     return AuthResponse.fromJson(loginResponse);
+  }
+
+  @override
+  Future insert({required AuthResponse authResponse}) async {
+    
   }
 }

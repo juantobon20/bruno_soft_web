@@ -1,5 +1,5 @@
-import '../../data/data.dart';
-import '../domain.dart';
+import '../../../data/data.dart';
+import '../../domain.dart';
 
 class LoginUseCase {
 

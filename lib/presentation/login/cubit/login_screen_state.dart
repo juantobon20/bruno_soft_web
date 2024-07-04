@@ -2,62 +2,34 @@ part of 'login_screen_bloc.dart';
 
 class LoginState extends Equatable {
 
-  final bool isLoading;
-  final String userName;
-  final String password;
+  final LoadingEnum loading;
+  final FieldData userName;
+  final FieldData password;
   final bool isValid;
-  final LoginErrorState loginErrorState;
   final ErrorData? errorData;
 
   const LoginState({
-    this.isLoading = false,
-    this.userName = "",
-    this.password = "",
+    this.loading = LoadingEnum.init,
+    this.userName = const FieldData(),
+    this.password = const FieldData(),
     this.isValid = false,
-    this.errorData,
-    this.loginErrorState = const LoginErrorState()
+    this.errorData
   });
 
   LoginState copyWith({
-    bool? isLoading,
-    String? userName,
-    String? password,
+    LoadingEnum? loading,
+    FieldData? userName,
+    FieldData? password,
     bool? isValid,
-    ErrorData? errorData,
-    LoginErrorState? loginErrorState
+    ErrorData? errorData
   }) => LoginState(
-    isLoading: isLoading ?? this.isLoading,
+    loading: loading ?? this.loading,
     userName: userName ?? this.userName,
     password: password ?? this.password,
     isValid: isValid ?? this.isValid,
-    errorData: errorData ?? this.errorData,
-    loginErrorState: loginErrorState ?? this.loginErrorState,
+    errorData: errorData
   );
 
   @override
-  List<Object> get props => [ isLoading, userName, password, isValid, loginErrorState ];
-}
-
-class LoginErrorState {
-  final String? userName;
-  final String? password;
-
-  const LoginErrorState({
-    this.userName,
-    this.password
-  });
-
-  LoginErrorState copyWithUser({
-    String? userName
-  }) => LoginErrorState(
-    userName: userName,
-    password: password
-  );
-
-  LoginErrorState copyWithPassword({
-    String? password
-  }) => LoginErrorState(
-    password: password,
-    userName: userName
-  );
+  List<Object> get props => [ loading, userName, password, isValid ];
 }

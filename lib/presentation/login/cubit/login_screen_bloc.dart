@@ -1,5 +1,3 @@
-
-import 'package:bruno_soft_web/domain/usecases/login_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +19,8 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
     super(const LoginState()) {
       on<UserNameChangedEvent>(_onUserNameChanged);
       on<PasswordChangedEvent>(_onPasswordChanged);
+      on<LoadingEvent>(_onLoadingChanged);
+      on<ErrorEvent>(_onErrorChanged);
     }
   
   void _onUserNameChanged(UserNameChangedEvent event, Emitter<LoginState> emit) {
@@ -29,31 +29,52 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
       MinimumValidationStrategy()
     ]);
 
-    final validation = _validationRouter.validate(ValidationType.other, event.userName);
-  
+    final ValidationResponse validation = _validationRouter.validate(ValidationType.other, event.userName);
+    final FieldData userNameField = FieldData(
+      text: event.userName,
+      isValid: validation.isValid,
+      error: validation.messageError
+    );
+
     emit(state.copyWith(
-      userName: event.userName,
-      loginErrorState: state.loginErrorState.copyWithUser(
-        userName: validation.messageError
-      ),
-      isValid: state.isValid && validation.isValid
+      userName: userNameField,
+      isValid: state.password.isValid && validation.isValid
     ));
   }
 
   void _onPasswordChanged(PasswordChangedEvent event, Emitter<LoginState> emit) {
+    final MinimumValidationStrategy minimumValidationStrategy = MinimumValidationStrategy();
+    minimumValidationStrategy.setMinimum(10);
+    
     _validationRouter.register(ValidationType.password, [
       EmptyValidationStrategy(),
-      PasswordValidationStrategy()
+      minimumValidationStrategy
     ]);
 
     final validation = _validationRouter.validate(ValidationType.password, event.password);
+    final FieldData passwordField = FieldData(
+      text: event.password,
+      isValid: validation.isValid,
+      error: validation.messageError
+    );
 
     emit(state.copyWith(
-      password: event.password,
-      loginErrorState : state.loginErrorState.copyWithPassword(
-        password: validation.messageError
-      ),
-      isValid: state.isValid && validation.isValid
+      password: passwordField,
+      isValid: state.userName.isValid && validation.isValid
+    ));
+  }
+
+  void _onLoadingChanged(LoadingEvent event, Emitter<LoginState> emit) {
+    emit(state.copyWith(
+      loading: event.loading,
+      errorData: null
+    ));
+  }
+
+  void _onErrorChanged(ErrorEvent event, Emitter<LoginState> emit) {
+    emit(state.copyWith(
+      errorData: event.errorData,
+      loading: LoadingEnum.hide
     ));
   }
 
@@ -67,7 +88,22 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
 
   void onSubmit() {
     if (!state.isValid) {
-
+      return;
     }
+
+    add(LoadingEvent(loading: LoadingEnum.show));
+
+    ServiceHelper.handleServiceCall(
+      serviceCall: () async {
+        final loginResponse = await _loginUseCase.login(
+          userName: state.userName.text, 
+          password: state.password.text
+        );
+        print(loginResponse);
+      }, 
+      returnException: (error) {
+        //add(ErrorEvent(errorData: error));
+      }
+    );
   }
 }

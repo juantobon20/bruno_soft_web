@@ -10,7 +10,6 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future login({required AuthRequest authRequest}) async {
     final response = await authDatasource.login(authRequest: authRequest);
-    print(response);
   }
 
 }

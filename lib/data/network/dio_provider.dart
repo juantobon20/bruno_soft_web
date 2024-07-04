@@ -34,6 +34,9 @@ class DioProvider {
   ) async {
     try {
       final response = await _dio.post(endpoint, data: data);
+      if (response.statusCode != null && response.statusCode! >= 400) {
+        throw ApiFailureException(response.statusCode, response.data);
+      }
       return response.data;
     } catch (error) {
       throw _handleError(error as Exception);
