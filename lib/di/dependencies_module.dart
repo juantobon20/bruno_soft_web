@@ -1,4 +1,3 @@
-import 'package:bruno_soft_web/domain/usecases/auth/is_logged_in_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -62,4 +61,5 @@ void setupLocator() {
       loginScreenBloc: getIt<LoginScreenBloc>()
     )
   );
+  getIt.registerLazySingleton(() => HomeScreenCubit());
 }

@@ -57,7 +57,7 @@ class AppRouter {
         )*/
       ],
       redirect: (context, state) {
-        final AuthStatus authStatus = routerCubit.state.authStatus;
+        /*final AuthStatus authStatus = routerCubit.state.authStatus;
 
         if (authStatus == AuthStatus.checking) {
           return splashPath;
@@ -69,9 +69,9 @@ class AppRouter {
 
         if (authStatus == AuthStatus.authenticated) {
           return homePath;
-        }
+        }*/
 
-        return null;
+        return homePath;
       },
     );
   }

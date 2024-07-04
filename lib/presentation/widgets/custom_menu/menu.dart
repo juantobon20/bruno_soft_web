@@ -1,4 +1,6 @@
+import 'package:bruno_soft_web/presentation/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets.dart';
 import 'nav_bar_avatar.dart';
@@ -9,31 +11,28 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    return Container(
-      width: double.infinity,
+    final HomeScreenCubit cubit = context.read<HomeScreenCubit>();
+    final isMobile = context.isMobileDesign();
+  
+    return SizedBox(
       height: 50,
-      decoration: buildBoxDecoration(),
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         children: [
           
-          if (size.width < 700)
+          if (isMobile)
             IconButton(onPressed: () {
-              //SideMenuProvider.openMenu();
+              cubit.openMenu();
             }, icon: const Icon(Icons.menu_outlined)),
           
           const SizedBox(width: 5),  
-
+          
           //Search input
-          if (size.width >= 390)
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 250),
-              child: const CustomSearchTextField(),
-            ),
-
-          const Spacer(),
-
+          const Expanded(
+            child: CustomSearchTextField()
+          ),
+          const SizedBox(width: 10),
+          
           const NotificationsIndicator(),
 
           const SizedBox(width: 10),

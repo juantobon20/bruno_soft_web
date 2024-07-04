@@ -5,3 +5,4 @@ export 'router/cubit/app_router_cubit.dart';
 export 'router/app_router.dart';
 
 export 'theme/app_theme.dart';
+export 'theme/custom_colors.dart';

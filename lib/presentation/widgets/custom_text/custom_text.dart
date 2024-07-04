@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../configs/config.dart';
 import '../custom_text_font.dart';
 
 class CustomText extends StatelessWidget {
@@ -41,7 +42,7 @@ CustomText titleText({
 
 CustomText primaryText({ 
   required String text,
-  Color? textColor
+  Color textColor = CustomColors.primaryText
 }) => _customText(
   text: text, 
   textStyle: CustomTextFont.primaryStyle.copyWith(color: textColor)
@@ -49,7 +50,7 @@ CustomText primaryText({
 
 CustomText secondaryText({ 
   required String text,
-  Color? textColor
+  Color textColor = CustomColors.secondaryText
 }) => _customText(
   text: text, 
   textStyle: CustomTextFont.secondaryStyle.copyWith(color: textColor)
@@ -57,7 +58,7 @@ CustomText secondaryText({
 
 CustomText tertiaryText({ 
   required String text,
-  Color? textColor
+  Color textColor = CustomColors.tertiaryText
 }) => _customText(
   text: text, 
   textStyle: CustomTextFont.tertiaryStyle.copyWith(color: textColor)

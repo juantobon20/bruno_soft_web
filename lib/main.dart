@@ -4,12 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'configs/config.dart';
 import 'di/dependencies_module.dart';
+import 'presentation/presentation.dart';
 
 void main() {
   setupLocator();
 
-  runApp(BlocProvider(
-    create: (context) => getIt<AppRouterCubit>(),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => getIt<AppRouterCubit>()),
+      BlocProvider(create: (_) => getIt<HomeScreenCubit>())
+    ],
     child: const MainApp(),
   ));
 }
@@ -21,9 +25,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme().getTheme(),
       routerConfig: AppRouter().routes(context.watch<AppRouterCubit>()),
       title: 'BrunoSoft',
-      theme: AppTheme().getTheme(),
     );
   }
 }

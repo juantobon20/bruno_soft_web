@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/view_extensions.dart';
+import '../widgets/widgets.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = isMobileDesign(MediaQuery.of(context).size);
+    final ColorScheme colorScheme = context.colorSchemeFromContext();
+
+    final bool isMobile = context.isMobileDesign();
     final double imgSize = isMobile ? 150 : 400;
     final double circularSize = isMobile ? 200 : 500;
 
     return Container(
-      decoration: _customBoxDecoration,
+      decoration: _customBoxDecoration(colorScheme),
       child: Center(
         child: Stack(
           children: [
@@ -28,9 +30,9 @@ class SplashScreen extends StatelessWidget {
               child: SizedBox(
                 width: circularSize,
                 height: circularSize,
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   strokeWidth: 10,
-                  color: Color(0x78FF0A1A),
+                  color: colorScheme.surface.withOpacity(0.5),
                 )
               ),
             )
@@ -40,10 +42,10 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  final BoxDecoration _customBoxDecoration = const BoxDecoration(
+  BoxDecoration _customBoxDecoration(ColorScheme colorScheme) => BoxDecoration(
     gradient: RadialGradient(
-      radius: 0.9, 
-      colors: [Color(0x78FF0A1A), Color(0xFFFF0B0B)]
+      radius: 0.5, 
+      colors: [ colorScheme.secondary, colorScheme.primary]
     )
   );
 }

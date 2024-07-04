@@ -19,7 +19,7 @@ class CustomTextFont {
   );
 
   static final tertiaryStyle = GoogleFonts.merriweather(
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: FontWeight.normal
   );
 

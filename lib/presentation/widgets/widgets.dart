@@ -12,3 +12,5 @@ export 'custom_text/custom_text.dart';
 
 export 'custom_menu/menu.dart';
 export 'custom_menu/side_bar.dart';
+
+export 'utils/view_extensions.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../configs/config.dart';
 import '../widgets.dart';
 
 class MenuItem extends StatefulWidget {
@@ -27,13 +28,17 @@ class _MenuItemState extends State<MenuItem> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = context.colorSchemeFromContext();
+    final Color background = isHovered
+        ? colorScheme.primary.withOpacity(0.1)
+        : widget.isActive ? colorScheme.primary 
+        : Colors.transparent;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
-      color: isHovered
-        ? Colors.white.withOpacity(0.1)
-        : widget.isActive ? Colors.white.withOpacity(0.1) : Colors.transparent,
-      child: Material(
-        color: Colors.transparent,
+      decoration: _buildBoxDecoration(color: background),
+      child: Container(
+        decoration: _buildBoxDecoration(color: background),
         child: InkWell(
           onTap: widget.isActive ? null : () => widget.onPressed(),
           child: Padding(
@@ -44,13 +49,16 @@ class _MenuItemState extends State<MenuItem> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(widget.icon, color: Colors.white.withOpacity(0.3)),
+                  Icon(
+                    widget.icon, 
+                    color: widget.isActive ? Colors.white : CustomColors.primaryText
+                  ),
                   
                   const SizedBox(width: 10),
 
                   secondaryText(
                     text: widget.text,
-                    textColor: Colors.white.withOpacity(0.8) 
+                    textColor: widget.isActive ? Colors.white : CustomColors.primaryText
                   )
                 ],
               ),
@@ -60,6 +68,13 @@ class _MenuItemState extends State<MenuItem> {
       ),
     );
   }
+
+  BoxDecoration _buildBoxDecoration({
+    required Color color,
+  }) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(16)
+  );
 
   void _updateIsHovered(bool isHovered) {
     setState(() {
