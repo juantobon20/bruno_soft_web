@@ -3,13 +3,17 @@ import '../data.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   
-  final AuthDatasource authDatasource;
+  final AuthDatasource _authDatasource;
 
-  AuthRepositoryImpl({required this.authDatasource});
+  AuthRepositoryImpl({required authDatasource}) : _authDatasource = authDatasource;
   
   @override
-  Future login({required AuthRequest authRequest}) async {
-    final response = await authDatasource.login(authRequest: authRequest);
+  Future<AuthResponse> login({required AuthRequest authRequest}) async {
+    return await _authDatasource.login(authRequest: authRequest);
   }
-
+  
+  @override
+  Future<void> insert({required AuthData authData}) async {
+    await _authDatasource.insert(authData: authData);
+  }
 }

@@ -1,4 +1,3 @@
-import '../../../data/data.dart';
 import '../../domain.dart';
 
 class InsertAuthUsecase {
@@ -8,8 +7,8 @@ class InsertAuthUsecase {
   InsertAuthUsecase({required AuthRepository authRepository}) : _authRepository = authRepository;
 
   Future insert({
-    required AuthResponse authResponse
+    required AuthData authData
   }) async {
-    
+    await _authRepository.insert(authData: authData);
   }
 }

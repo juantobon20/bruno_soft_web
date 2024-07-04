@@ -7,13 +7,13 @@ class LoginUseCase {
 
   LoginUseCase({required AuthRepository authRepository}) : _authRepository = authRepository;
 
-  Future login({
+  Future<AuthData> login({
     required String userName,
     required String password
   }) async {
     final AuthRequest request = AuthRequest(userName: userName, password: password);
 
     final response = await _authRepository.login(authRequest: request);
-    print(response);
+    return response.mapper();
   }
 }

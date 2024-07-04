@@ -1,11 +1,19 @@
+import 'dart:convert';
+
+import '../../configs/config.dart';
 import '../../domain/domain.dart';
 import '../data.dart';
 
 class AuthDatasourceImpl extends AuthDatasource {
 
   final DioProvider _dioProvider;
-
-  AuthDatasourceImpl({required DioProvider dioProvider}) : _dioProvider = dioProvider;
+  final KeyValueStorageService _keyValueStorageService;
+  
+  AuthDatasourceImpl({
+    required DioProvider dioProvider,
+    required KeyValueStorageService keyValueStorageService
+  }) : _dioProvider = dioProvider,
+    _keyValueStorageService = keyValueStorageService;
   
   @override
   Future<AuthResponse> login({required AuthRequest authRequest}) async {
@@ -16,7 +24,9 @@ class AuthDatasourceImpl extends AuthDatasource {
   }
 
   @override
-  Future insert({required AuthResponse authResponse}) async {
-    
+  Future insert({required AuthData authData}) async {
+    await _keyValueStorageService.setKeyValue(Constants.tokenKey, authData.token);
+    await _keyValueStorageService.setKeyValue(Constants.tokenExpirationKey, authData.tokenExpiration.toIso8601String());
+    await _keyValueStorageService.setKeyValue(Constants.userAuthKey, jsonEncode(authData.user.toJson()));
   }
 }

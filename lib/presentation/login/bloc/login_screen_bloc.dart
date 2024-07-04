@@ -10,12 +10,15 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
 
   final ValidationRouter _validationRouter;
   final LoginUseCase _loginUseCase;
+  final InsertAuthUsecase _insertAuthUsecase;
 
   LoginScreenBloc({
     required ValidationRouter validationRouter,
-    required LoginUseCase loginUseCase
+    required LoginUseCase loginUseCase,
+    required InsertAuthUsecase insertAuthCase
   }) : _validationRouter = validationRouter, 
     _loginUseCase = loginUseCase,
+    _insertAuthUsecase = insertAuthCase,
     super(const LoginState()) {
       on<UserNameChangedEvent>(_onUserNameChanged);
       on<PasswordChangedEvent>(_onPasswordChanged);
@@ -95,14 +98,26 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
 
     ServiceHelper.handleServiceCall(
       serviceCall: () async {
-        final loginResponse = await _loginUseCase.login(
+        final AuthData loginResponse = await _loginUseCase.login(
           userName: state.userName.text, 
           password: state.password.text
         );
-        print(loginResponse);
+        
+        if (!loginResponse.user.state) {
+          add(ErrorEvent(errorData: 
+            ErrorData(
+              type: ErrorType.otherError, 
+              message: "El usuario se encuentra inactivo.\nPor favor validar con el administrador.",
+              title: "Usuario inactivo"
+            )
+          ));
+          return;
+        }
+
+        _insertAuthUsecase.insert(authData: loginResponse);
       }, 
       returnException: (error) {
-        //add(ErrorEvent(errorData: error));
+        add(ErrorEvent(errorData: error));
       }
     );
   }

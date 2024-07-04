@@ -4,6 +4,9 @@ export 'exceptions/network_exception.dart';
 
 export 'helpers/service_helper.dart';
 
+export 'models/mappers/auth_response_mapper.dart';
+
+export 'models/auth_data.dart';
 export 'models/error_data.dart';
 export 'models/field_data.dart';
 export 'models/loading_enum.dart';

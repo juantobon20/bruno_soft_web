@@ -1,8 +1,8 @@
-import 'package:bruno_soft_web/domain/domain.dart';
-import 'package:bruno_soft_web/presentation/dialogs/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/domain.dart';
+import '../dialogs/dialog.dart';
 import '../widgets/widgets.dart';
 import 'login.dart';
 
