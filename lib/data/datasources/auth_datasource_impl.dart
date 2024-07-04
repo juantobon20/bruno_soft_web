@@ -4,7 +4,7 @@ import '../../configs/config.dart';
 import '../../domain/domain.dart';
 import '../data.dart';
 
-class AuthDatasourceImpl extends AuthDatasource {
+class AuthDatasourceImpl implements AuthDatasource {
 
   final DioProvider _dioProvider;
   final KeyValueStorageService _keyValueStorageService;
@@ -28,5 +28,11 @@ class AuthDatasourceImpl extends AuthDatasource {
     await _keyValueStorageService.setKeyValue(Constants.tokenKey, authData.token);
     await _keyValueStorageService.setKeyValue(Constants.tokenExpirationKey, authData.tokenExpiration.toIso8601String());
     await _keyValueStorageService.setKeyValue(Constants.userAuthKey, jsonEncode(authData.user.toJson()));
+  }
+  
+  @override
+  Future<bool> isLoggedIn() async {
+    final token = await _keyValueStorageService.getValue(Constants.tokenKey);
+    return token != null && token.isNotEmpty;
   }
 }

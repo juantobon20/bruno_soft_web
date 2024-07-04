@@ -15,6 +15,7 @@ export 'models/validation_response.dart';
 export 'repositories/auth_repository.dart';
 
 export 'usecases/auth/insert_auth_usecase.dart';
+export 'usecases/auth/is_logged_in_usecase.dart';
 export 'usecases/auth/login_usecase.dart';
 
 export 'validation_strategies/validation_router.dart';

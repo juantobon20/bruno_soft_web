@@ -122,8 +122,11 @@ class LoginScreen extends StatelessWidget {
   }
 
   final BoxDecoration _customBoxDecoration = const BoxDecoration(
-      gradient: RadialGradient(
-          radius: 0.9, colors: [Color(0x78FF0A1A), Color(0xFFFF0B0B)]));
+    gradient: RadialGradient(
+      radius: 0.9, 
+      colors: [Color(0x78FF0A1A), Color(0xFFFF0B0B)]
+    )
+  );
 
   BoxConstraints? _customConstraint(Size size) {
     if (size.width >= 480) {

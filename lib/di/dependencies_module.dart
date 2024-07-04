@@ -1,3 +1,4 @@
+import 'package:bruno_soft_web/domain/usecases/auth/is_logged_in_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,8 +40,9 @@ void setupLocator() {
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(authDatasource: getIt<AuthDatasource>()));
 
   //UseCases
-  getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt<AuthRepository>()));
   getIt.registerLazySingleton(() => InsertAuthUsecase(authRepository: getIt<AuthRepository>()));
+  getIt.registerLazySingleton(() => IsLoggedInUsecase(authRepository: getIt<AuthRepository>()));
+  getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt<AuthRepository>()));
 
   //Validators
   getIt.registerLazySingleton(() => ValidationRouter());

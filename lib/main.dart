@@ -4,12 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'configs/config.dart';
 import 'di/dependencies_module.dart';
-import 'presentation/presentation.dart';
+import 'domain/domain.dart';
 
 void main() {
   setupLocator();
 
-  runApp(const MainApp());
+  runApp(BlocProvider(
+    create: (context) => AppRouterCubit(isLoggedInUsecase: getIt<IsLoggedInUsecase>()),
+    child: const MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -17,13 +20,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: AppRouter().routes(context.watch<AppRouterCubit>()),
+      title: 'BrunoSoft',
       theme: AppTheme().getTheme(),
-      home: Scaffold(
-        body: BlocProvider(
-        create: (context) => getIt<LoginScreenBloc>(),
-        child: LoginScreen(),
-      )),
     );
   }
 }

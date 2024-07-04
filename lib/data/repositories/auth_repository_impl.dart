@@ -1,7 +1,7 @@
 import '../../domain/domain.dart';
 import '../data.dart';
 
-class AuthRepositoryImpl extends AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   
   final AuthDatasource _authDatasource;
 
@@ -15,5 +15,10 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<void> insert({required AuthData authData}) async {
     await _authDatasource.insert(authData: authData);
+  }
+  
+  @override
+  Future<bool> isLoggedIn() async {
+    return await _authDatasource.isLoggedIn();
   }
 }

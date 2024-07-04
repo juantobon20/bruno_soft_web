@@ -6,4 +6,6 @@ abstract class AuthDatasource {
   Future<AuthResponse> login({ required AuthRequest authRequest });
 
   Future insert({required AuthData authData});
+
+  Future<bool> isLoggedIn();
 }
