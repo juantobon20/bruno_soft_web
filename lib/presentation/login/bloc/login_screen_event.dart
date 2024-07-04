@@ -20,6 +20,8 @@ class LoadingEvent extends LoginEvent {
   LoadingEvent({required this.loading});
 }
 
+class SuccessEvent extends LoginEvent {}
+
 class ErrorEvent extends LoginEvent {
   final ErrorData errorData;
 

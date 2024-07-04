@@ -2,6 +2,7 @@ import 'package:bruno_soft_web/domain/usecases/auth/is_logged_in_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
+import '../configs/config.dart';
 import '../data/data.dart';
 import '../domain/domain.dart';
 import '../presentation/presentation.dart';
@@ -28,7 +29,7 @@ void setupLocator() {
     );
   });
 
-  getIt.registerLazySingleton<KeyValueStorageService>(() => KeyValueStorageServiceImpl(flutterSecureStorage: getIt.get<FlutterSecureStorage>()));
+  getIt.registerLazySingleton<KeyValueStorageService>(() => KeyValueStorageServiceImpl(flutterSecureStorage: getIt<FlutterSecureStorage>()));
 
   //Datasources
   getIt.registerLazySingleton<AuthDatasource>(() => AuthDatasourceImpl(
@@ -53,6 +54,12 @@ void setupLocator() {
       validationRouter: getIt<ValidationRouter>(),
       loginUseCase: getIt<LoginUseCase>(),
       insertAuthCase: getIt<InsertAuthUsecase>()
+    )
+  );
+  getIt.registerLazySingleton(() => 
+    AppRouterCubit(
+      isLoggedInUsecase: getIt<IsLoggedInUsecase>(),
+      loginScreenBloc: getIt<LoginScreenBloc>()
     )
   );
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../configs/config.dart';
 import '../../domain/domain.dart';
 import '../dialogs/dialog.dart';
 import '../widgets/widgets.dart';
@@ -22,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         if (state.loading == LoadingEnum.show && isMobileDesign) {
           showLoadingDialog(context, message: "Iniciando sesión");
         } else if (state.loading == LoadingEnum.hide && isMobileDesign) {
-          Navigator.pop(context);
+          context.pop(context);
         }
 
         if (state.errorData != null) {
@@ -30,6 +32,10 @@ class LoginScreen extends StatelessWidget {
             context: context, 
             errorData: state.errorData!
           );
+        }
+
+        if (state.navigateToHome) {
+          context.push(homePath);
         }
       },
       builder: (context, state) {

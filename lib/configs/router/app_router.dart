@@ -60,8 +60,8 @@ class AppRouter {
         final isGoingTo = state.fullPath;
         final AuthStatus authStatus = routerCubit.state.authStatus;
 
-        if (isGoingTo == splashPath && authStatus == AuthStatus.checking) {
-          return null;
+        if (authStatus == AuthStatus.checking) {
+          return splashPath;
         }
 
         if (authStatus == AuthStatus.notAuthenticated) {
@@ -80,7 +80,7 @@ class AppRouter {
 
 const splashPath = '/';
 const loginPath = '/login';
-const homePath = '/:page';
+const homePath = '/home';
 const pokemonDetailPath = 'pokemon_detail/:id';
 
 const homeViewPath = "home";

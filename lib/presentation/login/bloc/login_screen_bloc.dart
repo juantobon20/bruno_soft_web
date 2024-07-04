@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +14,9 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCase _loginUseCase;
   final InsertAuthUsecase _insertAuthUsecase;
 
+  final StreamController<bool> _authController = StreamController();
+  Stream<bool> get authStatusStream => _authController.stream;
+
   LoginScreenBloc({
     required ValidationRouter validationRouter,
     required LoginUseCase loginUseCase,
@@ -24,6 +29,7 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
       on<PasswordChangedEvent>(_onPasswordChanged);
       on<LoadingEvent>(_onLoadingChanged);
       on<ErrorEvent>(_onErrorChanged);
+      on<SuccessEvent>(_onSuccess);
     }
   
   void _onUserNameChanged(UserNameChangedEvent event, Emitter<LoginState> emit) {
@@ -81,6 +87,14 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
     ));
   }
 
+  void _onSuccess(SuccessEvent event, Emitter<LoginState> emit) {
+    emit(state.copyWith(
+      errorData: null,
+      loading: LoadingEnum.hide,
+      navigateToHome: true
+    ));
+  }
+
   void onUserNameChanged(String value) {
     add(UserNameChangedEvent(userName: value));
   }
@@ -115,6 +129,8 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
         }
 
         _insertAuthUsecase.insert(authData: loginResponse);
+        _authController.add(true);
+        add(SuccessEvent());
       }, 
       returnException: (error) {
         add(ErrorEvent(errorData: error));

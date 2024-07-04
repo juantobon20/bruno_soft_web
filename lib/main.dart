@@ -4,13 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'configs/config.dart';
 import 'di/dependencies_module.dart';
-import 'domain/domain.dart';
 
 void main() {
   setupLocator();
 
   runApp(BlocProvider(
-    create: (context) => AppRouterCubit(isLoggedInUsecase: getIt<IsLoggedInUsecase>()),
+    create: (context) => getIt<AppRouterCubit>(),
     child: const MainApp(),
   ));
 }
