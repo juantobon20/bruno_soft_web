@@ -55,8 +55,6 @@ class SeconadyButton extends StatelessWidget {
   }
 
   ButtonStyle setStyle(double radius) => OutlinedButton.styleFrom(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(radius)
-    )
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius))
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../custom_text_font.dart';
 import 'container_text_field.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -33,12 +34,16 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: labelText,
+          labelStyle: CustomTextFont.textFieldStyle,
           hintText: hintText.isEmpty && labelText.isNotEmpty ? labelText : hintText,
+          hintStyle: CustomTextFont.textFieldStyle,
           prefixIcon: icon,
-          errorText: errorText
+          errorText: errorText,
+          errorStyle: CustomTextFont.textFieldStyle          
         ),
         keyboardType: keyboardType,
         onChanged: onChanged,
+        style: CustomTextFont.textFieldStyle
     );
 
     return containerTextFieldBuild(

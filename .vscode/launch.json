@@ -8,6 +8,7 @@
             "name": "bruno_soft_web",
             "request": "launch",
             "type": "dart",
+            //"args": [ "--web-port", "8080" ]
         },
         {
             "name": "bruno_soft_web (profile mode)",

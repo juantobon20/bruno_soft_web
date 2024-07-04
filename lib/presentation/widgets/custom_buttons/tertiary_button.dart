@@ -32,12 +32,12 @@ class TertiaryButton extends StatelessWidget {
       button = TextButton.icon(
         onPressed: onPressed(isLoading, onPressedCallback), 
         icon: icon!, 
-        label: labelBtn,
+        label: labelBtn
       );
     } else {
       button = TextButton(
-        onPressed: onPressed(isLoading, onPressedCallback), 
-        child: labelBtn,
+        onPressed: onPressed(isLoading, onPressedCallback),
+        child: labelBtn
       );
     }
 

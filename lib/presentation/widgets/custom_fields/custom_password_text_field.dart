@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../custom_text_font.dart';
 import 'container_text_field.dart';
 
 class CustomPasswordTextField extends StatefulWidget {
@@ -41,17 +42,21 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
       decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: widget.labelText,
+          labelStyle: CustomTextFont.textFieldStyle,
           hintText: widget.hintText.isEmpty && widget.labelText.isNotEmpty ? widget.labelText : widget.hintText,
+          hintStyle: CustomTextFont.textFieldStyle,
           suffix: InkWell(
             onTap: _togglePasswordView,
             child: Icon(_isHidden ? Icons.visibility : Icons.visibility_off)
           ),
           prefixIcon: widget.icon,
-          errorText: widget.errorText
+          errorText: widget.errorText,
+          errorStyle: CustomTextFont.textFieldStyle
       ),
       keyboardType: widget.keyboardType,
       obscureText: _isHidden,
       onChanged: widget.onChanged,
+      style: CustomTextFont.textFieldStyle
     );
 
     return containerTextFieldBuild(

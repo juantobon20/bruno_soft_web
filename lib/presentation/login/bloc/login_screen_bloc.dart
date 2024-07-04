@@ -52,12 +52,9 @@ class LoginScreenBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onPasswordChanged(PasswordChangedEvent event, Emitter<LoginState> emit) {
-    final MinimumValidationStrategy minimumValidationStrategy = MinimumValidationStrategy();
-    minimumValidationStrategy.setMinimum(10);
-    
     _validationRouter.register(ValidationType.password, [
       EmptyValidationStrategy(),
-      minimumValidationStrategy
+      MinimumValidationStrategy()
     ]);
 
     final validation = _validationRouter.validate(ValidationType.password, event.password);

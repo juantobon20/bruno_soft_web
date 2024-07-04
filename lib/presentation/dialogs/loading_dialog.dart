@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../widgets/widgets.dart';
+
 void showLoadingDialog(
   BuildContext context,
   { String? message }
@@ -40,7 +42,7 @@ class _LoadingDialog extends StatelessWidget {
             ),
       
             if (message != null)
-              Text(message!, style: const TextStyle(fontSize: 16)),
+              titleText(text: message!),
           ]
         ),
       ),

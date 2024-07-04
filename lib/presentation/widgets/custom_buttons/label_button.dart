@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../custom_text_font.dart';
+
 VoidCallback? onPressed(bool isLoading, VoidCallback? onPressedCallback) => !isLoading ? onPressedCallback : null;
 
-Widget labelButtonBuild({required String text, required bool isLoading}) => isLoading ? const CircularProgressIndicator() : Text(text);
+Widget labelButtonBuild({
+  required String text, 
+  required bool isLoading
+}) => isLoading ? 
+  const CircularProgressIndicator() : 
+  Text(text, style: CustomTextFont.buttonStyle);

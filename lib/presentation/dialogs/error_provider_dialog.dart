@@ -82,14 +82,14 @@ void _showAlertDialog(
   WidgetsBinding.instance.addPostFrameCallback((_) {
     showDialog(context: context, builder:(context) => 
       AlertDialog(
-        title: Text(title),
-        content: Text(message),
+        title: primaryText(text: title),
+        content: secondaryText(text: message),
         actions: [
           FilledButton(
             onPressed: () {
               Navigator.pop(context);
             }, 
-            child: const Text('Aceptar'))
+            child: tertiaryText(text: 'Aceptar'))
         ],
       )
     );

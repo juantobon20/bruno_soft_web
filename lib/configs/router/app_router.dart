@@ -14,7 +14,7 @@ class AppRouter {
 
         GoRoute(
           path: splashPath,
-          builder: (_, __) => SplashScreen()
+          builder: (_, __) => const SplashScreen()
         ),
 
         GoRoute(
@@ -27,7 +27,7 @@ class AppRouter {
 
         GoRoute(
           path: homePath,
-          builder: (_, __) => HomeScreen()
+          builder: (_, __) => const HomeScreen()
         )
         
         /*GoRoute(
@@ -57,7 +57,6 @@ class AppRouter {
         )*/
       ],
       redirect: (context, state) {
-        final isGoingTo = state.fullPath;
         final AuthStatus authStatus = routerCubit.state.authStatus;
 
         if (authStatus == AuthStatus.checking) {
