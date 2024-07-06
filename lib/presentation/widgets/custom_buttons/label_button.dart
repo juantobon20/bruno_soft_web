@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../custom_text_font.dart';
+import '../widgets.dart';
 
 VoidCallback? onPressed(bool isLoading, VoidCallback? onPressedCallback) => !isLoading ? onPressedCallback : null;
 

@@ -10,8 +10,12 @@ class AppTheme {
         primary: CustomColors.primary,
         secondary: CustomColors.secondary,
         tertiary: CustomColors.tertiary,
-        surface: CustomColors.background
+        surface: CustomColors.background,
       ),
+      cardTheme: const CardTheme(
+        color: CustomColors.cardBackground
+      ),
+      cardColor: CustomColors.cardBackground,
       useMaterial3: true,
     );
   }

@@ -28,11 +28,18 @@ class AuthDatasourceImpl implements AuthDatasource {
     await _keyValueStorageService.setKeyValue(Constants.tokenKey, authData.token);
     await _keyValueStorageService.setKeyValue(Constants.tokenExpirationKey, authData.tokenExpiration.toIso8601String());
     await _keyValueStorageService.setKeyValue(Constants.userAuthKey, jsonEncode(authData.user.toJson()));
+
+    _dioProvider.setToken(authData.token);
   }
   
   @override
   Future<bool> isLoggedIn() async {
     final token = await _keyValueStorageService.getValue(Constants.tokenKey);
-    return token != null && token.isNotEmpty;
+    final bool existToken = token != null && token.isNotEmpty;
+    if (existToken) {
+      _dioProvider.setToken(token);
+    }
+    
+    return existToken;
   }
 }

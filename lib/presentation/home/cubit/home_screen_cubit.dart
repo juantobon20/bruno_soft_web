@@ -1,5 +1,9 @@
-import 'package:flutter/widgets.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../configs/config.dart';
+import '../../widgets/widgets.dart';
 
 part 'home_screen_state.dart';
 
@@ -14,10 +18,19 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     final opacity = Tween<double>(begin: 0, end: 1)
       .animate(CurvedAnimation(parent: animationController, curve: Curves.easeInOut));
 
+    final options = [
+      MenuData(icon: Icons.home_outlined, text: 'Inicio', isSelected: true, path: RouterPath.homeView),
+      MenuData(icon: Icons.discount_outlined, text: 'Productos', isSelected: false),
+      MenuData(icon: Icons.people_alt_outlined, text: 'Proveedores', isSelected: false),
+      MenuData(icon: Icons.people_alt_outlined, text: 'Clientes', isSelected: false),
+      MenuData(icon: Icons.people_alt_outlined, text: 'Usuarios', isSelected: false, path: RouterPath.usersView),
+    ];
+
     emit(state.copyWith(
       animationController: animationController,
       movement: movement,
-      opacity: opacity
+      opacity: opacity,
+      options: options
     ));
   }
 
@@ -35,6 +48,16 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     if (state.animationController != null) {
       state.animationController!.reverse();
     }
+  }
+
+  void changeOption(String path) {
+    final updatedOptions = state.options.map((item) {
+      return item.copyWith(isSelected: item.path?.name == path);
+    }).toList();
+
+    emit(state.copyWith(
+      options: updatedOptions
+    ));
   }
 
   void toggleMenu() {

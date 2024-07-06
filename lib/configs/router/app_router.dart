@@ -9,16 +9,16 @@ class AppRouter {
 
   GoRouter routes(AppRouterCubit routerCubit) {
     return GoRouter(
-      initialLocation: splashPath,
+      initialLocation: RouterPath.splash.path,
       routes: [
 
         GoRoute(
-          path: splashPath,
+          path: RouterPath.splash.path,
           builder: (_, __) => const SplashScreen()
         ),
 
         GoRoute(
-          path: loginPath,
+          path: RouterPath.login.path,
           builder: (_, __) => BlocProvider(
             create: (context) => getIt<LoginScreenBloc>(),
             child: LoginScreen(),
@@ -26,61 +26,51 @@ class AppRouter {
         ),
 
         GoRoute(
-          path: homePath,
-          builder: (_, __) => const HomeScreen()
-        )
-        
-        /*GoRoute(
-            path: homePath,
-            builder: (_, __) => BlocProvider(
-                  create: (context) => HomeCubit(
-                    pokemonRepository: pokemonRepository
-                  ),
-                  child: const HomeScreen(),
-                ),
-            routes: [
-              GoRoute(
-                  path: pokemonDetailPath,
-                  builder: (_, state) {
-                    final pokemonId = int.tryParse(state.params['id'] ?? '-1') ?? -1;
-                    return BlocProvider(
-                      create: (_) => PokemonDetailScreenCubit(
-                        pokemonRepository: pokemonRepository
-                      ),
-                      child: PokemonDetailScreen(pokemonId: pokemonId),
-                    );
-                  }),
-            ]),
+          path: RouterPath.homeScreen.path,
+          builder: (context, state) {
+            final page = state.pathParameters['page'] ?? RouterPath.homeView.name;
+            return HomeScreen(page: page) ;
+          },
+        ),
+
         GoRoute(
           path: '/',
-          redirect: (_, __) => '/home',
-        )*/
+          redirect: (_, __) => RouterPath.homeView.path,
+        )
       ],
       redirect: (context, state) {
-        /*final AuthStatus authStatus = routerCubit.state.authStatus;
+        final path = state.matchedLocation;
+        final AuthStatus authStatus = routerCubit.state.authStatus;
 
         if (authStatus == AuthStatus.checking) {
-          return splashPath;
+          return RouterPath.splash.path;
         }
 
         if (authStatus == AuthStatus.notAuthenticated) {
-          return loginPath;
+          return RouterPath.login.path;
         }
 
         if (authStatus == AuthStatus.authenticated) {
-          return homePath;
-        }*/
+          if (path == RouterPath.splash.path || path == RouterPath.login.path) {
+            return RouterPath.homeView.path;
+          }
+        }
 
-        return homePath;
-      },
+        return null;
+      }
     );
   }
 }
 
-const splashPath = '/';
-const loginPath = '/login';
-const homePath = '/home';
-const pokemonDetailPath = 'pokemon_detail/:id';
+enum RouterPath {
+  splash("splash", "/splash"),
+  login("login", "/login"),
+  homeScreen("home", "/:page"),
+  homeView("home", "/home"),
+  usersView("users", "/users");
+  
+  final String name;
+  final String path;
 
-const homeViewPath = "home";
-const favoriteViewPath = "favorites";
+  const RouterPath(this.name, this.path);
+}

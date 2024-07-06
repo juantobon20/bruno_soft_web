@@ -1,7 +1,7 @@
-import 'package:bruno_soft_web/presentation/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../home/home.dart';
 import '../widgets.dart';
 import 'nav_bar_avatar.dart';
 import 'notification_indicator.dart';
@@ -31,6 +31,7 @@ class NavBar extends StatelessWidget {
           const Expanded(
             child: CustomSearchTextField()
           ),
+          
           const SizedBox(width: 10),
           
           const NotificationsIndicator(),

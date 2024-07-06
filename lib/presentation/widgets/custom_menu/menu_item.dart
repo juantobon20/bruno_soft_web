@@ -7,14 +7,14 @@ class MenuItem extends StatefulWidget {
 
   final String text;
   final IconData icon;
-  final bool isActive;
+  final bool isSelected;
   final Function onPressed;
 
   const MenuItem({
     super.key, 
     required this.text, 
     required this.icon, 
-    this.isActive = false,
+    required this.isSelected,
     required this.onPressed
   });
 
@@ -29,10 +29,14 @@ class _MenuItemState extends State<MenuItem> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = context.colorSchemeFromContext();
-    final Color background = isHovered
+    final Color background = widget.isSelected ? colorScheme.primary 
+        : isHovered
         ? colorScheme.primary.withOpacity(0.1)
-        : widget.isActive ? colorScheme.primary 
         : Colors.transparent;
+
+    if (widget.isSelected) {
+      isHovered = false;
+    }        
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
@@ -40,25 +44,33 @@ class _MenuItemState extends State<MenuItem> {
       child: Container(
         decoration: _buildBoxDecoration(color: background),
         child: InkWell(
-          onTap: widget.isActive ? null : () => widget.onPressed(),
+          onTap: widget.isSelected ? null : () => widget.onPressed(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: MouseRegion(
-              onEnter: (_) => _updateIsHovered(true),
-              onExit: (_) => _updateIsHovered(false),
+              onEnter: (_) {
+                if (!widget.isSelected) {
+                  _updateIsHovered(true);
+                }
+              },
+              onExit: (_) {
+                if (!widget.isSelected) {
+                  _updateIsHovered(false);
+                }
+              },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     widget.icon, 
-                    color: widget.isActive ? Colors.white : CustomColors.primaryText
+                    color: widget.isSelected ? Colors.white : CustomColors.primaryText
                   ),
                   
                   const SizedBox(width: 10),
 
                   secondaryText(
                     text: widget.text,
-                    textColor: widget.isActive ? Colors.white : CustomColors.primaryText
+                    textColor: widget.isSelected ? Colors.white : CustomColors.primaryText
                   )
                 ],
               ),

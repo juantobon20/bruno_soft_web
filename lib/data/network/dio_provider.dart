@@ -19,6 +19,10 @@ class DioProvider {
     _dio.interceptors.add(LoggingInterceptor());
   } 
 
+  void setToken(String token) {
+    _dio.options.headers["Authorization"] = "Bearer $token";
+  }
+
   Future<dynamic> get(String endpoint) async {
     try {
       final response = await _dio.get(endpoint);

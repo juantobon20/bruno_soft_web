@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../home/home.dart';
 import '../widgets.dart';
 import 'logo.dart';
-import 'menu_data.dart';
-import 'menu_item.dart';
 
 class SideBar extends StatelessWidget {
 
@@ -17,20 +16,19 @@ class SideBar extends StatelessWidget {
 
   void navigateTo(BuildContext context, String routerName) {
     context.read<HomeScreenCubit>().closeMenu();
-    /*
-    NavigationService.replaceTo(routerName);*/
   }
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = context.colorSchemeFromContext();
+    final bool isMobile = context.isMobileDesign();
 
     return Container(
       width: 250,
       height: double.infinity,
       color: colorScheme.surface,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.symmetric(horizontal: !isMobile ? 24 : 16),
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
@@ -43,8 +41,12 @@ class SideBar extends StatelessWidget {
               MenuItem(
                 text: data.text,
                 icon: data.icon,
-                isActive: data.isActive, // provider.currentPage == Flurorouter.dashboardRoute,
-                onPressed: () {}
+                isSelected: data.isSelected,
+                onPressed: () {
+                  if (data.path != null) {
+                    context.go(data.path!.path);
+                  }
+                }
               ),
 
               const SizedBox(height: 12),

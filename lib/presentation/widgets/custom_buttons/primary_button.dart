@@ -7,7 +7,7 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final String text;
   final Icon? icon;
-  final VoidCallback onPressedCallback;
+  final VoidCallback? onPressedCallback;
   final double width;
   final double height;
   final EdgeInsetsGeometry padding;

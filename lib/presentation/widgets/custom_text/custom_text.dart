@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../configs/config.dart';
-import '../custom_text_font.dart';
+import '../widgets.dart';
 
 class CustomText extends StatelessWidget {
 

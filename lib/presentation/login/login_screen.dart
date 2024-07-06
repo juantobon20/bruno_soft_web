@@ -16,8 +16,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final isMobileDesign = size.width < 1000;
+    final isMobileDesign = context.isMobileDesign();
 
     return BlocConsumer<LoginScreenBloc, LoginState>(
       listener: (context, state) {
@@ -35,7 +34,7 @@ class LoginScreen extends StatelessWidget {
         }
 
         if (state.navigateToHome) {
-          context.push(homePath);
+          context.push(RouterPath.homeView.path);
         }
       },
       builder: (context, state) {

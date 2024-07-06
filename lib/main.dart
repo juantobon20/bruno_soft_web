@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'configs/config.dart';
 import 'di/dependencies_module.dart';
@@ -23,10 +24,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GoRouter router = AppRouter().routes(context.watch<AppRouterCubit>());
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),
-      routerConfig: AppRouter().routes(context.watch<AppRouterCubit>()),
+      routerConfig: router,
       title: 'BrunoSoft',
     );
   }

@@ -35,14 +35,18 @@ void setupLocator() {
     dioProvider: getIt<DioProvider>(),
     keyValueStorageService: getIt<KeyValueStorageService>()
   ));
+  getIt.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(dioProvider: getIt<DioProvider>()));
 
   //Repositories
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(authDatasource: getIt<AuthDatasource>()));
+  getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(userDatasource: getIt<UserDatasource>()));
 
   //UseCases
   getIt.registerLazySingleton(() => InsertAuthUsecase(authRepository: getIt<AuthRepository>()));
   getIt.registerLazySingleton(() => IsLoggedInUsecase(authRepository: getIt<AuthRepository>()));
   getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt<AuthRepository>()));
+
+  getIt.registerLazySingleton(() => GetUsersUseCase(userRepository: getIt<UserRepository>()));
 
   //Validators
   getIt.registerLazySingleton(() => ValidationRouter());
@@ -62,4 +66,5 @@ void setupLocator() {
     )
   );
   getIt.registerLazySingleton(() => HomeScreenCubit());
+  getIt.registerLazySingleton(() => UsersViewCubit(getUsersUseCase: getIt<GetUsersUseCase>()));
 }

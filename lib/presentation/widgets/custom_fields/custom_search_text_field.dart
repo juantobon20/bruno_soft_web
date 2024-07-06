@@ -1,5 +1,6 @@
-import 'package:bruno_soft_web/presentation/widgets/custom_text_font.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets.dart';
 
 class CustomSearchTextField extends StatelessWidget {
   const CustomSearchTextField({super.key});

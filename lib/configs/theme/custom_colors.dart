@@ -11,4 +11,5 @@ class CustomColors {
   static const tertiaryText = Color(0xFFC0C0C0);
 
   static const background = Color(0xFFE7E7E7);
+  static const cardBackground = Color(0xFFFFFFFF);
 }

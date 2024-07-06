@@ -1,5 +1,6 @@
-import 'package:bruno_soft_web/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets.dart';
 
 class NotificationsIndicator extends StatelessWidget {
   const NotificationsIndicator({super.key});
