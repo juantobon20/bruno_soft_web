@@ -16,6 +16,7 @@ export 'custom_menu/menu.dart';
 export 'custom_menu/side_bar.dart';
 export 'custom_menu/menu_data.dart';
 export 'custom_menu/menu_item.dart';
+export 'custom_menu/menu_title_data.dart';
 
 export 'custom_paginated/custom_header_data.dart';
 export 'custom_paginated/custom_paginated.dart';

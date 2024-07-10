@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 Row(
                   children: [
                     if (!isMobile) 
-                      SideBar(options: state.options),
+                      SideBar(menuOptions: state.options),
 
                     Expanded(
                       child: Column(
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         if (state.movement != null)
                           Transform.translate(
                             offset: Offset(state.movement!.value, 0),
-                            child: SideBar(options: state.options),
+                            child: SideBar(menuOptions: state.options),
                           )
                       ]
                     )

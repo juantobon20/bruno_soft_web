@@ -24,6 +24,11 @@ class AuthDatasourceImpl implements AuthDatasource {
   }
 
   @override
+  Future<void> logout() async {
+    await _keyValueStorageService.removeAll();
+  }
+
+  @override
   Future insert({required AuthData authData}) async {
     await _keyValueStorageService.setKeyValue(Constants.tokenKey, authData.token);
     await _keyValueStorageService.setKeyValue(Constants.tokenExpirationKey, authData.tokenExpiration.toIso8601String());
@@ -35,11 +40,22 @@ class AuthDatasourceImpl implements AuthDatasource {
   @override
   Future<bool> isLoggedIn() async {
     final token = await _keyValueStorageService.getValue(Constants.tokenKey);
-    final bool existToken = token != null && token.isNotEmpty;
-    if (existToken) {
-      _dioProvider.setToken(token);
+    if (token == null || token.trim().isEmpty) {
+      return false;
     }
-    
-    return existToken;
+
+    final tokenExpirationString = await _keyValueStorageService.getValue(Constants.tokenExpirationKey);
+    if (tokenExpirationString == null || tokenExpirationString.isEmpty) {
+      return false;
+    }
+
+    final tokenExpiration = DateTime.parse(tokenExpirationString);
+    if (tokenExpiration.isBefore(DateTime.now())) {
+      logout();
+      return false;
+    }
+
+    _dioProvider.setToken(token);
+    return true;
   }
 }

@@ -20,4 +20,8 @@ class KeyValueStorageServiceImpl extends KeyValueStorageService {
     await _flutterSecureStorage.write(key: key, value: value);
   }
 
+  @override
+  Future removeAll() async {
+    await _flutterSecureStorage.deleteAll();
+  }
 }

@@ -5,13 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../../home/home.dart';
 import '../widgets.dart';
 import 'logo.dart';
+import 'text_separator.dart';
 
 class SideBar extends StatelessWidget {
 
-  final List<MenuData> options;
+  final List<MenuTitleData> menuOptions;
   const SideBar({
     super.key,
-    required this.options
+    required this.menuOptions
   });
 
   void navigateTo(BuildContext context, String routerName) {
@@ -37,19 +38,24 @@ class SideBar extends StatelessWidget {
         
             const SizedBox(height: 32),
 
-            for (var data in options) ...[
-              MenuItem(
-                text: data.text,
-                icon: data.icon,
-                isSelected: data.isSelected,
+            for (var data in menuOptions) ...[
+              if (data.menuTitle.isNotEmpty)
+                TextSeparator(text: data.menuTitle),
+            
+              for (var option in data.options) ...[
+                MenuItem(
+                text: option.text,
+                icon: option.icon,
+                isSelected: option.isSelected,
                 onPressed: () {
-                  if (data.path != null) {
-                    context.go(data.path!.path);
+                  if (option.path != null) {
+                    context.go(option.path!.path);
                   }
                 }
               ),
 
               const SizedBox(height: 12),
+              ]
             ],
           ],
         ),

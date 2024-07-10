@@ -18,28 +18,28 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobileDesign = context.isMobileDesign();
 
-    return BlocConsumer<LoginScreenBloc, LoginState>(
-      listener: (context, state) {
-        if (state.loading == LoadingEnum.show && isMobileDesign) {
-          showLoadingDialog(context, message: "Iniciando sesión");
-        } else if (state.loading == LoadingEnum.hide && isMobileDesign) {
-          context.pop(context);
-        }
-
-        if (state.errorData != null) {
-          ErrorDialogProvider(
-            context: context, 
-            errorData: state.errorData!
-          );
-        }
-
-        if (state.navigateToHome) {
-          context.push(RouterPath.homeView.path);
-        }
-      },
-      builder: (context, state) {
-        return Background(
-          body: Scaffold(
+    return Background(
+      body: BlocConsumer<LoginScreenBloc, LoginState>(
+        listener: (context, state) {
+          if (state.loading == LoadingEnum.show && isMobileDesign) {
+            showLoadingDialog(context, message: "Iniciando sesión");
+          } else if (state.loading == LoadingEnum.hide && isMobileDesign) {
+            context.pop(context);
+          }
+      
+          if (state.errorData != null) {
+            ErrorDialogProvider(
+              context: context, 
+              errorData: state.errorData!
+            );
+          }
+      
+          if (state.navigateToHome) {
+            context.push(RouterPath.homeView.path);
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
             body: Container(
               decoration: _customBoxDecoration,
               height: double.infinity,
@@ -62,9 +62,9 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             )
-          )
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

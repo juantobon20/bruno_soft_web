@@ -6,7 +6,7 @@ class HomeScreenState extends Equatable {
   final AnimationController? animationController;
   final Animation<double>? movement;
   final Animation<double>? opacity;
-  final List<MenuData> options;
+  final List<MenuTitleData> options;
   
 
   const HomeScreenState({
@@ -22,7 +22,7 @@ class HomeScreenState extends Equatable {
     AnimationController? animationController,
     Animation<double>? movement,
     Animation<double>? opacity,
-    List<MenuData>? options
+    List<MenuTitleData>? options
   }) => HomeScreenState(
     animationController: animationController ?? this.animationController,
     movement: movement ?? this.movement,

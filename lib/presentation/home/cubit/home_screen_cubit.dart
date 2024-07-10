@@ -19,11 +19,22 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       .animate(CurvedAnimation(parent: animationController, curve: Curves.easeInOut));
 
     final options = [
-      MenuData(icon: Icons.home_outlined, text: 'Inicio', isSelected: true, path: RouterPath.homeView),
-      MenuData(icon: Icons.discount_outlined, text: 'Productos', isSelected: false),
-      MenuData(icon: Icons.people_alt_outlined, text: 'Proveedores', isSelected: false),
-      MenuData(icon: Icons.people_alt_outlined, text: 'Clientes', isSelected: false),
-      MenuData(icon: Icons.people_alt_outlined, text: 'Usuarios', isSelected: false, path: RouterPath.usersView),
+      MenuTitleData(
+        menuTitle: '', 
+        options: [
+          MenuData(icon: Icons.home_outlined, text: 'Inicio', isSelected: true, path: RouterPath.homeView),
+          MenuData(icon: Icons.discount_outlined, text: 'Productos', isSelected: false),
+          MenuData(icon: Icons.people_alt_outlined, text: 'Proveedores', isSelected: false),
+          MenuData(icon: Icons.people_alt_outlined, text: 'Clientes', isSelected: false)
+        ]
+      ),
+      MenuTitleData(
+        menuTitle: 'Administración', 
+        options: [
+          MenuData(icon: Icons.people_alt_outlined, text: 'Usuarios', isSelected: false, path: RouterPath.usersView),
+          MenuData(icon: Icons.security, text: 'Roles', isSelected: false)
+        ]
+      )
     ];
 
     emit(state.copyWith(
@@ -51,9 +62,11 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   }
 
   void changeOption(String path) {
-    final updatedOptions = state.options.map((item) {
-      return item.copyWith(isSelected: item.path?.name == path);
-    }).toList();
+    final updatedOptions = state.options.map((item) => 
+      item.copyWith(options: item.options.map((option) => 
+        option.copyWith(isSelected: option.path?.name == path)).toList()
+      )
+    ).toList();
 
     emit(state.copyWith(
       options: updatedOptions

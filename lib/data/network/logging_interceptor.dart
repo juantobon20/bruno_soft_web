@@ -20,7 +20,7 @@ class LoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     print("<-- ${err.message} ${err.response?.requestOptions.method} ${err.response?.requestOptions.baseUrl}${err.response?.requestOptions.path}");
     return super.onError(err, handler);
   }

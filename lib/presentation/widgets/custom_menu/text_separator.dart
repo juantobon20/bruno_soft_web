@@ -1,3 +1,4 @@
+import 'package:bruno_soft_web/configs/config.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets.dart';
@@ -17,7 +18,7 @@ class TextSeparator extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 5),
       child: tertiaryText(
         text: text,
-        textColor: Colors.white.withOpacity(0.3) 
+        textColor: CustomColors.primaryText
       )
     );
   }
