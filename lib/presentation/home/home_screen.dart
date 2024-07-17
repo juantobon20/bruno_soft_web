@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../configs/config.dart';
 import '../../di/dependencies_module.dart';
-import '../../domain/domain.dart';
 import '../widgets/widgets.dart';
 import 'home.dart';
 
@@ -126,7 +125,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         }
 
         return BlocProvider(
-          create: (_) => UsersViewCubit(getUsersUseCase: getIt<GetUsersUseCase>()),
+          create: (_) => getIt<UsersViewCubit>(),
+          child: page,
+        );
+      case RouterPath.rolesView:
+        Widget page;
+        if (isMobile) {
+          page = const RolePageMobile();
+        } else {
+          page = RolePageDesktop();
+        }
+
+        return BlocProvider(
+          create: (_) => getIt<RolesViewCubit>(),
           child: page,
         );
       default:

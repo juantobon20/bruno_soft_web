@@ -35,10 +35,16 @@ void setupLocator() {
     dioProvider: getIt<DioProvider>(),
     keyValueStorageService: getIt<KeyValueStorageService>()
   ));
+  getIt.registerLazySingleton<RoleCategoryDatasource>(() => RoleCategoryDatasourceImpl(dioProvider: getIt<DioProvider>()));
+  getIt.registerLazySingleton<RoleDatasource>(() => RoleDatasourceImpl(dioProvider: getIt<DioProvider>()));
+  getIt.registerLazySingleton<RoleFunctionDatasource>(() => RoleFunctionDatasourceImpl(dioProvider: getIt<DioProvider>()));
   getIt.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(dioProvider: getIt<DioProvider>()));
 
   //Repositories
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(authDatasource: getIt<AuthDatasource>()));
+  getIt.registerLazySingleton<RoleCategoryRepository>(() => RoleCategoryRepositoryImpl(roleCategoryDatasource: getIt<RoleCategoryDatasource>()));
+  getIt.registerLazySingleton<RoleFunctionRepository>(() => RoleFunctionRepositoryImpl(roleFunctionDatasource: getIt<RoleFunctionDatasource>()));
+  getIt.registerLazySingleton<RoleRepository>(() => RoleRepositoryImpl(roleDatasource: getIt<RoleDatasource>()));
   getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(userDatasource: getIt<UserDatasource>()));
 
   //UseCases
@@ -47,6 +53,10 @@ void setupLocator() {
   getIt.registerLazySingleton(() => LoginUseCase(authRepository: getIt<AuthRepository>()));
 
   getIt.registerLazySingleton(() => GetUsersUseCase(userRepository: getIt<UserRepository>()));
+
+  getIt.registerLazySingleton(() => GetRoleCategoriesUseCase(roleCategoryRepository: getIt<RoleCategoryRepository>()));
+  getIt.registerLazySingleton(() => GetRoleFunctionsUseCase(roleFunctionRepository: getIt<RoleFunctionRepository>()));
+  getIt.registerLazySingleton(() => GetRolesUseCase(roleRepository: getIt<RoleRepository>()));
 
   //Validators
   getIt.registerLazySingleton(() => ValidationRouter());
@@ -66,5 +76,10 @@ void setupLocator() {
     )
   );
   getIt.registerLazySingleton(() => HomeScreenCubit());
+  getIt.registerLazySingleton(() => RolesViewCubit(
+    getRolesUseCase: getIt<GetRolesUseCase>(),
+    getRoleFunctionsUseCase : getIt<GetRoleFunctionsUseCase>(),
+    getRoleCategoriesUseCase: getIt<GetRoleCategoriesUseCase>()
+  ));
   getIt.registerLazySingleton(() => UsersViewCubit(getUsersUseCase: getIt<GetUsersUseCase>()));
 }

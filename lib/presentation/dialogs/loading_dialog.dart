@@ -12,16 +12,17 @@ void showLoadingDialog(
       context: context, 
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        content: _LoadingDialog(message: message),
+        content: LoadingDialog(message: message),
       )
     );
   });
 }
 
-class _LoadingDialog extends StatelessWidget {
+class LoadingDialog extends StatelessWidget {
 
   final String? message;
-  const _LoadingDialog({
+  const LoadingDialog({
+    super.key, 
     this.message
   });
 
@@ -45,6 +46,25 @@ class _LoadingDialog extends StatelessWidget {
               titleText(text: message!),
           ]
         ),
+      ),
+    );
+  }
+}
+
+class CustomCircularProgressDialog extends StatelessWidget {
+  const CustomCircularProgressDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Card(
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircularProgressIndicator(strokeWidth: 3),
+        ),
+      ),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle
       ),
     );
   }

@@ -32,7 +32,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
         menuTitle: 'Administración', 
         options: [
           MenuData(icon: Icons.people_alt_outlined, text: 'Usuarios', isSelected: false, path: RouterPath.usersView),
-          MenuData(icon: Icons.security, text: 'Roles', isSelected: false)
+          MenuData(icon: Icons.security, text: 'Roles', isSelected: false, path: RouterPath.rolesView)
         ]
       )
     ];

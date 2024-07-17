@@ -1,7 +1,7 @@
 class AuthResponse {
-    String token;
-    DateTime tokenExpiration;
-    UserAuthResponse user;
+    final String token;
+    final DateTime tokenExpiration;
+    final UserAuthResponse user;
 
     AuthResponse({
         required this.token,
@@ -17,11 +17,11 @@ class AuthResponse {
 }
 
 class UserAuthResponse {
-    int id;
-    int roleId;
-    String firstName;
-    String lastName;
-    bool state;
+    final int id;
+    final int roleId;
+    final String firstName;
+    final String lastName;
+    final bool state;
 
     UserAuthResponse({
       required this.id,

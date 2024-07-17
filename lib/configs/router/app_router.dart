@@ -67,7 +67,8 @@ enum RouterPath {
   login("login", "/login"),
   homeScreen("home", "/:page"),
   homeView("home", "/home"),
-  usersView("users", "/users");
+  usersView("users", "/users"),
+  rolesView("roles", "/roles");
   
   final String name;
   final String path;

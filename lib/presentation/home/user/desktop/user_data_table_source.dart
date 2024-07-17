@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../configs/config.dart';
 import '../../../../domain/domain.dart';
+import '../../../presentation.dart';
 import '../../../widgets/widgets.dart';
 
-class UserDataTableSource extends DataTableSource {
-
-  final List<UserData> users;
-
-  UserDataTableSource({required this.users});
+class UserDataTableSource extends DataTableSourceBase<UserData> {
+  
+  UserDataTableSource({required super.list});
 
   @override
   DataRow? getRow(int index) {
-    final user = users[index];
+    final user = list[index];
     
     return DataRow.byIndex(
       index: index,
@@ -33,14 +32,4 @@ class UserDataTableSource extends DataTableSource {
       ]
     );
   }
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => users.length;
-
-  @override
-  int get selectedRowCount => 0;
-
 }

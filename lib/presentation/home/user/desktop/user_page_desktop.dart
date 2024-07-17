@@ -37,11 +37,18 @@ class UserPageDesktop extends StatelessWidget {
       builder: (context, state) {
         return CustomPaginated<UserData>(
           title: 'Usuarios',
-          textButton: 'Crear Usuario',
+          options: [
+            PrimaryButton(
+              width: 90,
+              height: 30,
+              text: 'Crear',
+              onPressedCallback: null,
+            ),
+          ],
           sortColumnIndex: state.sortColumnIndex,
           sortAscending: state.sortAscending,
           columns: _columns,
-          source: UserDataTableSource(users: state.users),
+          source: UserDataTableSource(list: state.users),
           orderByColumn: context.read<UsersViewCubit>().changeOrder,
         );
       },

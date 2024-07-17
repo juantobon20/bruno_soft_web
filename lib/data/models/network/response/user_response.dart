@@ -1,13 +1,13 @@
 class UserResponse {
-    int id;
-    int roleId;
-    int neighborhoodId;
-    String identification;
-    String firstName;
-    String lastName;
-    String phone;
-    String email;
-    bool state;
+    final int id;
+    final int roleId;
+    final int neighborhoodId;
+    final String identification;
+    final String firstName;
+    final String lastName;
+    final String phone;
+    final String email;
+    final bool state;
 
     UserResponse({
       required this.id,
